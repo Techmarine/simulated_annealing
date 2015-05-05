@@ -20,6 +20,10 @@ while temperature > final_temperature
     new_path = path;
     swap_point1 = randi(n_cities - 1);
     swap_point2 = randi(n_cities - 1);
+    %if points are the same then generate a new one
+    while swap_point2 == swap_point1
+        swap_point2 = randi(n_cities - 1);
+    end
     new_path(swap_point1) = path(swap_point2);
     new_path(swap_point2) = path(swap_point1);
     
@@ -27,7 +31,11 @@ while temperature > final_temperature
     %path or not
     cost = cost_function(distances,path); %for record
     delta_cost = cost - cost_function(distances,new_path);
-    if exp(delta_cost/temperature) > rand;
+    if delta_cost < 0
+        if exp(delta_cost/temperature) > rand
+            path = new_path;
+        end
+    else
         path = new_path;
     end
     
