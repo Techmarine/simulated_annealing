@@ -29,8 +29,7 @@ while temperature > final_temperature
     
     %Calculate cost function, its difference and decide whether to update
     %path or not
-    cost = cost_function(distances,path); %for record
-    delta_cost = cost - cost_function(distances,new_path);
+    delta_cost = cost_function(distances,path) - cost_function(distances,new_path);
     if delta_cost < 0
         if exp(delta_cost/temperature) > rand
             path = new_path;
@@ -40,7 +39,7 @@ while temperature > final_temperature
     end
     
     %Record cost for plot
-    record(i) = cost;
+    record(i) = cost_function(distances,path);
     i = i + 1;
     
     %Update temperature
